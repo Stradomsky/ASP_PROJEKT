@@ -1,3 +1,9 @@
+using ASP_PROJEKT.Entities;
+using ASP_PROJEKT.Services.PhoneBooks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 namespace ASP_PROJEKT
 {
     public class Program
@@ -8,6 +14,8 @@ namespace ASP_PROJEKT
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddTransient<IPhoneBookService, PhoneBookService>();
 
             var app = builder.Build();
 

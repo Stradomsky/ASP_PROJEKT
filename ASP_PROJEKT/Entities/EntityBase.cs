@@ -1,4 +1,6 @@
-﻿namespace ASP_PROJEKT.Entities
+﻿using System;
+
+namespace ASP_PROJEKT.Entities
 {
     public abstract class EntityBase
     {
