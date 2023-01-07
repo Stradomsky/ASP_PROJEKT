@@ -1,9 +1,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PhoneBookApp.Data.Configuration;
+using PhoneBookApp.Data.Entities;
+using PhoneBookApp.Data.Repositories;
+using PhoneBookApp.Logic.Services.PhoneBooks;
 
 namespace PhoneBookWeb
 {
+    // Apka webowa to tak naprawdê apka consolowa, która ma biblioteki ASP.NET miêdzy innymi z przestrzeni nazw  Microsoft.AspNetCore, które ogarniaj¹ ¿¹dania HTTP i inne webówkowe rzeczy
+    // Podspodem znajduje siê konfiguracja apki, tu mo¿na zdefiniowaæ wszystkie jej zachowania, mapowanie requestó na kontrolery i akcje (MVC), wszelkie wstrzykiwanie zale¿noœci (DI), itp
+    // Zycie apki zaczyna siê w metodzie app.Run();
+
+    // MVC - bardzo popularna architektura apek webowych Model View Controller
+    // Model - klasy modeli
+    // View - Widoki (HTML) zwracane do ¿¹dania
+    // Controller - Klasa tworzona automatycznie na podstawie przychodz¹cego ¿¹dania, jej zadaniem jest wywo³aæ logikê programu i zwróciæ odpowiedni widok
     public class Program
     {
         public static void Main(string[] args)
@@ -12,6 +24,12 @@ namespace PhoneBookWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            // https://localhost/Home/Index
+            // 1 "argument" czy tam cz³on uri (po domenie) jest mapowany na controller, a nastêpny na akcjê (metodê kontrolera)
+
+            builder.Services.AddTransient<IPhoneBookService, PhoneBookService>();
+            builder.Services.AddTransient<IRepository<PhoneBook>, Repository<PhoneBook>>();
+            builder.Services.AddSingleton<PhoneBookAppContext>();
 
             var app = builder.Build();
 
@@ -32,7 +50,7 @@ namespace PhoneBookWeb
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=PhoneBook}/{action=Index}/{id?}");
 
             app.Run();
         }

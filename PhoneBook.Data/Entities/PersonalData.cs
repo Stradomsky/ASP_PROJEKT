@@ -1,10 +1,10 @@
-﻿namespace PhoneBookWeb.Entities
+﻿namespace PhoneBookApp.Data.Entities
 {
-    public class PersonalData
+    public class PersonalData : EntityBase
     {
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-        public string EmailAdres { get; set; }
+        public string EmailAddress { get; set; }
     }
 }

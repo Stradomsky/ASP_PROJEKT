@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PhoneBookWeb.Entities
+namespace PhoneBookApp.Data.Entities
 {
     public abstract class EntityBase
     {
