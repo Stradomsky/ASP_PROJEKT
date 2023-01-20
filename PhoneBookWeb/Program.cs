@@ -5,11 +5,12 @@ using PhoneBookApp.Data.Configuration;
 using PhoneBookApp.Data.Entities;
 using PhoneBookApp.Data.Repositories;
 using PhoneBookApp.Logic.Services.PhoneBooks;
+using PhoneBookApp.Logic.Services.Users;
 
 namespace PhoneBookWeb
 {
     // Apka webowa to tak naprawdê apka consolowa, która ma biblioteki ASP.NET miêdzy innymi z przestrzeni nazw  Microsoft.AspNetCore, które ogarniaj¹ ¿¹dania HTTP i inne webówkowe rzeczy
-    // Podspodem znajduje siê konfiguracja apki, tu mo¿na zdefiniowaæ wszystkie jej zachowania, mapowanie requestó na kontrolery i akcje (MVC), wszelkie wstrzykiwanie zale¿noœci (DI), itp
+    // Podspodem znajduje siê konfiguracja apki, tu mo¿na zdefiniowaæ wszystkie jej zachowania, mapowanie requestów na kontrolery i akcje (MVC), wszelkie wstrzykiwanie zale¿noœci (DI), itp
     // Zycie apki zaczyna siê w metodzie app.Run();
 
     // MVC - bardzo popularna architektura apek webowych Model View Controller
@@ -27,9 +28,13 @@ namespace PhoneBookWeb
             // https://localhost/Home/Index
             // 1 "argument" czy tam cz³on uri (po domenie) jest mapowany na controller, a nastêpny na akcjê (metodê kontrolera)
 
-            builder.Services.AddTransient<IPhoneBookService, PhoneBookService>();
-            builder.Services.AddTransient<IRepository<PhoneBook>, Repository<PhoneBook>>();
             builder.Services.AddSingleton<PhoneBookAppContext>();
+
+            builder.Services.AddTransient<IPhoneBookService, PhoneBookService>();
+            builder.Services.AddTransient<IUserService, UserService>();
+
+            builder.Services.AddTransient<IRepository<PhoneBook>, Repository<PhoneBook>>();
+            builder.Services.AddTransient<IRepository<User>, Repository<User>>();
 
             var app = builder.Build();
 
@@ -48,9 +53,10 @@ namespace PhoneBookWeb
 
             app.UseAuthorization();
 
+            // Widok od którego zacznie siê apka
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=PhoneBook}/{action=Index}/{id?}");
+                pattern: "{controller=SignIn}/{action=SignIn}");
 
             app.Run();
         }

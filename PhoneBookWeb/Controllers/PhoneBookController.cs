@@ -24,18 +24,15 @@ namespace PhoneBookApp.Controllers
         }
 
         // W ramach testu niech metoda wyświetla jakieś tam kontakty z naszej apki
-        public IActionResult Index()
+        public IActionResult ShowAllPhoneBooks()
         {
             // Tu wszelki testowy kod !
 
             List<PhoneBook> phoneBooks = _phoneBookService.GetAllPhoneBooks();
 
+            // Metoda View() będzie szukała widoku w lokacji Views/PhoneBook/Index.cshtml
+            // A bierze się to ze "wzoru"                    Views/NazwaKontrolera/NazwaAkcji.cshtml
             return View(phoneBooks);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

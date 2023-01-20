@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model Credentials
+
+<form method="post">
+  <!-- Login input -->
+  <div class="form-outline mb-4">
+    <input type="text" class="form-control" asp-for="Login"/>
+    <label class="form-label">Login address</label>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <input type="password" class="form-control" asp-for="Password"/>
+    <label class="form-label">Password</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+  <div class="text-center">
+    <p>Not a member? <a href="#!">Register</a></p>
+  </div>
+  
+  @if(ViewBag.Error != null)
+  {
+      <p>@ViewBag.Error</p>
+  }
+</form>
