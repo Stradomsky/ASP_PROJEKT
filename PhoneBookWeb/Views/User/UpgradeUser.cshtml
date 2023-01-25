@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "Logged";
+}
+
+<form method="post">
+
+  <div class="form-outline mb-4">
+    <label class="form-label">Enter your activation code</label>
+    <input type="text" class="form-control"/>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mb-4">Upgrade</button>
+  
+  @if(ViewBag.Error != null)
+  {
+      <p>@ViewBag.Error</p>
+  }
+
+</form>

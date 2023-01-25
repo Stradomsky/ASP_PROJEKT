@@ -30,8 +30,8 @@ namespace PhoneBookWeb
 
             builder.Services.AddSingleton<PhoneBookAppContext>();
 
-            builder.Services.AddTransient<IPhoneBookService, PhoneBookService>();
-            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddSingleton<IPhoneBookService, PhoneBookService>();
+            builder.Services.AddSingleton<IUserService, UserService>();
 
             builder.Services.AddTransient<IRepository<PhoneBook>, Repository<PhoneBook>>();
             builder.Services.AddTransient<IRepository<User>, Repository<User>>();
@@ -56,7 +56,7 @@ namespace PhoneBookWeb
             // Widok od którego zacznie siê apka
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=SignIn}/{action=SignIn}");
+                pattern: "{controller=Login}/{action=SignIn}");
 
             app.Run();
         }

@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PhoneBookApp.Data.Configuration;
 using PhoneBookApp.Data.Entities;
 using PhoneBookApp.Logic.Services.PhoneBooks;
-using PhoneBookApp.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace PhoneBookApp.Controllers
 {
@@ -33,12 +29,6 @@ namespace PhoneBookApp.Controllers
             // Metoda View() będzie szukała widoku w lokacji Views/PhoneBook/Index.cshtml
             // A bierze się to ze "wzoru"                    Views/NazwaKontrolera/NazwaAkcji.cshtml
             return View(phoneBooks);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

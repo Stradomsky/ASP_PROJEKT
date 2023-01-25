@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    //Layout = "x";
+}
+@model NewUser
+
+    <form method="post">      
+      <!-- Username input -->
+      <div class="form-outline mb-4">
+        <input type="text" class="form-control" asp-for="Login"/> 
+        <label class="form-label">Login</label>
+      </div>
+
+      <!-- Email input -->
+      <div class="form-outline mb-4">
+        <input type="email" class="form-control" asp-for="EmailAddress" />
+        <label class="form-label" for="registerEmail">Email address</label>
+      </div>
+
+      <!-- Number input -->
+      <div class="form-outline mb-4">
+        <input type="text" class="form-control" asp-for="Password" />
+        <label class="form-label" for="registerNumber">Password</label>
+      </div>
+
+      <!-- Password input -->
+      <div class="form-outline mb-4">
+        <input type="password" class="form-control"asp-for="RepeatedPassword"/>
+        <label class="form-label" for="registerPassword">Repeat password</label>
+      </div>
+
+      <!-- Checkbox -->
+      <div class="form-check d-flex justify-content-center mb-4">
+        <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+          aria-describedby="registerCheckHelpText" />
+        <label class="form-check-label" for="registerCheck">
+          I have read and agree to the terms
+        </label>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+    </form>
+  </div>
+</div>

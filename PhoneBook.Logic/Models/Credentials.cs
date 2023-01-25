@@ -1,4 +1,4 @@
-﻿namespace PhoneBookApp.Web.Models
+﻿namespace PhoneBookApp.Logic.Models
 {
     public class Credentials
     {

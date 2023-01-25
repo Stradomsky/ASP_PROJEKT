@@ -1,7 +1,16 @@
-﻿namespace PhoneBookApp.Logic.Services.Users
+﻿using PhoneBookApp.Data.Entities;
+using PhoneBookApp.Logic.Models;
+
+namespace PhoneBookApp.Logic.Services.Users
 {
-    public interface IUserService 
+    public interface IUserService
     {
-        bool SignIn(string login, string password);
+        bool SignedIn { get; }
+
+        User SignedInUser { get; }
+
+        bool SignIn(Credentials credentials);
+
+        void SignUp(NewUser newUser);
     }
 }
