@@ -3,29 +3,34 @@
     Layout = "Logged";
 }
 @model List<PhoneBook>
-
+<br />
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Your phonebooks</h1>
+    <button type="button" onclick="location.href='@Url.Action("CreatePhoneBook", "PhoneBook")'" class="btn btn-outline-primary ms-1">Add phonebook</button>
+    <br />
+    <br />
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nazwa</th>
-                <th scope="col">Maksymalna ilość</th>
+                <th scope="col">Name</th>
+                <th scope="col">Maximum number of contacts</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
+            <tr></tr>
         </thead>
         <tbody>
             @foreach (PhoneBook phoneBook in Model)
             {
                 <tr>
-                    <th scope="row">1</th>
                     <td>@phoneBook.Id</td>
                     <td>@phoneBook.Name</td>
                     <td>@phoneBook.MaxSize</td>
+                    <th onclick="location.href='@Url.Action("ShowContacts", "PhoneBook", new { phoneBookId = phoneBook.Id })'" >Show contacts</th>
+                    <th onclick="location.href='@Url.Action("DeletePhoneBook","PhoneBook", new { phoneBookId = phoneBook.Id })'" >Delete</th>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-    

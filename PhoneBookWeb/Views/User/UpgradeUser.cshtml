@@ -3,11 +3,14 @@
     Layout = "Logged";
 }
 
+@model PremiumCode
+
 <form method="post">
 
   <div class="form-outline mb-4">
-    <label class="form-label">Enter your activation code</label>
-    <input type="text" class="form-control"/>
+    <label class="form-label">Enter your activation code here</label>
+    <input type="text" class="form-control" asp-for="ActivationCode"/>
+    <span asp-validation-for="ActivationCode" class="text-danger"></span>
   </div>
 
   <button type="submit" class="btn btn-primary btn-block mb-4">Upgrade</button>

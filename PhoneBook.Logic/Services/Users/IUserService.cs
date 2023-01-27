@@ -12,5 +12,13 @@ namespace PhoneBookApp.Logic.Services.Users
         bool SignIn(Credentials credentials);
 
         void SignUp(NewUser newUser);
+
+        void PersonalDataEdition(PersonalDataEdition personalDataEdition);
+
+        void ChangePassword(ChangePassword changePassword);
+
+        void UpgradeUser(PremiumCode premiumCode);
+
+        void LogOut();
     }
 }

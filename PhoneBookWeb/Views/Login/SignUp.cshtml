@@ -1,45 +1,52 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-    //Layout = "x";
+    ViewData["Title"] = "Adding new user";
 }
 @model NewUser
 
-    <form method="post">      
-      <!-- Username input -->
-      <div class="form-outline mb-4">
-        <input type="text" class="form-control" asp-for="Login"/> 
+<form method="post">
+    <br />
+    <!-- Username input -->
+    <div class="form-outline mb-4">
         <label class="form-label">Login</label>
-      </div>
+        <input type="text" class="form-control" asp-for="Login" />
+        <span asp-validation-for="Login" class="text-danger"></span>
+    </div>
 
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" class="form-control" asp-for="EmailAddress" />
+    <!-- Email input -->
+    <div class="form-outline mb-4">
         <label class="form-label" for="registerEmail">Email address</label>
-      </div>
+        <input type="email" class="form-control" asp-for="EmailAddress" />
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+    </div>
 
-      <!-- Number input -->
-      <div class="form-outline mb-4">
-        <input type="text" class="form-control" asp-for="Password" />
+    <!-- Number input -->
+    <div class="form-outline mb-4">
         <label class="form-label" for="registerNumber">Password</label>
-      </div>
+        <input type="text" class="form-control" asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
 
-      <!-- Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" class="form-control"asp-for="RepeatedPassword"/>
+    <!-- Password input -->
+    <div class="form-outline mb-4">
         <label class="form-label" for="registerPassword">Repeat password</label>
-      </div>
+        <input type="password" class="form-control" asp-for="RepeatedPassword" />
+        <span asp-validation-for="RepeatedPassword" class="text-danger"></span>
+    </div>
 
-      <!-- Checkbox -->
-      <div class="form-check d-flex justify-content-center mb-4">
+    <!-- Checkbox -->
+    <div class="form-check d-flex justify-content-center mb-4">
         <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
-          aria-describedby="registerCheckHelpText" />
+               aria-describedby="registerCheckHelpText" />
         <label class="form-check-label" for="registerCheck">
-          I have read and agree to the terms
+            I have read and agree to the terms
         </label>
-      </div>
+    </div>
 
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
-    </form>
-  </div>
-</div>
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <span class="text-danger">@ViewBag.ErrorMessage</span>
+    }
+</form>

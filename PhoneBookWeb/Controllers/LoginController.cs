@@ -19,7 +19,7 @@ namespace PhoneBookApp.Web.Controllers
         {
             if (_userService.SignedIn)
             {
-                return Redirect("../User/PersonalData");
+                return FAQLogged();
             }
             else
             {
@@ -28,27 +28,43 @@ namespace PhoneBookApp.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult FAQLogged()
+        {
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
         public IActionResult SignIn()
         {
-            if(_userService.SignedIn)
+            if (_userService.SignedIn)
             {
 
             }
+
             return View();
         }
 
         [HttpPost]
         public IActionResult SignIn(Credentials credentials)
         {
-            bool signInSuccess = _userService.SignIn(credentials);
-
-            if (signInSuccess)
+            if (ModelState.IsValid)
             {
-                return Redirect("../User/PersonalData");
+                bool signInSuccess = _userService.SignIn(credentials);
+
+                if (signInSuccess)
+                {
+                    return Redirect("../User/PersonalData");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Incorrect credentials.";
+                    return View();
+                }
             }
             else
             {
-                ViewBag.Error = "Lalala";
                 return View();
             }
         }
@@ -62,17 +78,50 @@ namespace PhoneBookApp.Web.Controllers
         [HttpPost]
         public IActionResult SignUp(NewUser newUser)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _userService.SignUp(newUser);
+                try
+                {
+                    _userService.SignUp(newUser);
 
-                return Redirect("../User/PersonalData");
+                    return Redirect("../User/PersonalData");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.ErrorMessage = e.Message;
+                    return View();
+                }
             }
-            catch (Exception e)
+            else
             {
-                ViewBag.Error = e.Message;
                 return View();
             }
+        }
+
+        [HttpGet]
+        public IActionResult MainPage()
+        {
+            if (_userService.SignedIn)
+            {
+                return MainPageLogged();
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult MainPageLogged()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            _userService.LogOut();
+            return Redirect("../Login/SignIn");
         }
     }
 }

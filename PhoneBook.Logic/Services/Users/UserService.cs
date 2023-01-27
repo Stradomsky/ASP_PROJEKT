@@ -11,6 +11,8 @@ namespace PhoneBookApp.Logic.Services.Users
     {
         private readonly IRepository<User> _userRepository;
 
+        private readonly int _premiumPhoneBookMaxSize = 100;
+
         public bool SignedIn => SignedInUser != null;
 
         public User SignedInUser { get; set; }
@@ -24,7 +26,7 @@ namespace PhoneBookApp.Logic.Services.Users
         {
             List<User> users = _userRepository.GetAll();
 
-            User user = users.Single(u => u.Login == credentials.Login && u.Password == credentials.Password);
+            User user = users.SingleOrDefault(u => u.Login == credentials.Login && u.Password == credentials.Password);
 
             bool signInSuccess = user != null;
 
@@ -38,19 +40,74 @@ namespace PhoneBookApp.Logic.Services.Users
 
         public void SignUp(NewUser newUser)
         {
-            if(newUser.RepeatedPassword != newUser.Password)
+            if (newUser.RepeatedPassword != newUser.Password)
             {
                 throw new Exception("Repeated password isn't identical");
             }
 
-            User user = new User();
-            user.Login = newUser.Login;
-            user.Password = newUser.Password;
-            user.PersonalData = new PersonalData();
-            user.PersonalData.EmailAddress = newUser.EmailAddress;
-            _userRepository.Add(user);
+            User signingUpUser = new User
+            {
+                Login = newUser.Login,
+                Password = newUser.Password,
+                PersonalData = new PersonalData
+                {
+                    EmailAddress = newUser.EmailAddress
+                }
+            };
 
-            SignedInUser = user;
+            _userRepository.Add(signingUpUser);
+
+            SignedInUser = signingUpUser;
+        }
+
+        public void PersonalDataEdition(PersonalDataEdition personalDataEdition)
+        {
+            SignedInUser.PersonalData.Name = personalDataEdition.Name;
+            SignedInUser.PersonalData.Surname = personalDataEdition.Surname;
+            SignedInUser.PersonalData.Age = personalDataEdition.Age;
+            SignedInUser.PersonalData.EmailAddress = personalDataEdition.EmailAddress;
+
+            _userRepository.SaveChanges();
+        }
+
+        public void ChangePassword(ChangePassword changePassword)
+        {
+            bool isOldPasswordCorrect = SignedInUser.Password == changePassword.OldPassword;
+
+            if (!isOldPasswordCorrect)
+            {
+                throw new Exception("Current password is incorrect.");
+            }
+
+            bool isNewPasswordTheSameAsRepeated = changePassword.NewPassword == changePassword.RepeatedNewPassword;
+
+            if (!isNewPasswordTheSameAsRepeated)
+            {
+                throw new Exception("New passwords do not match.");
+            }
+
+            SignedInUser.Password = changePassword.NewPassword;
+            _userRepository.SaveChanges();
+        }
+
+        public void UpgradeUser(PremiumCode premiumCode)
+        {
+            if (premiumCode.ActivationCode == "QWERTY123" || premiumCode.ActivationCode == "ASDFG456")
+            {
+                SignedInUser.IsPremium = true;
+
+                foreach (PhoneBook phoneBook in SignedInUser.PhoneBooks)
+                {
+                    phoneBook.MaxSize = _premiumPhoneBookMaxSize;
+                }
+
+                _userRepository.SaveChanges();
+            }
+        }
+
+        public void LogOut()
+        {
+            SignedInUser = null;
         }
     }
 }

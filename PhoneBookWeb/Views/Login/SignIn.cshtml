@@ -1,26 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Signing in";
 }
 @model Credentials
 
 <form method="post">
+    <br />
   <!-- Login input -->
   <div class="form-outline mb-4">
-    <input type="text" class="form-control" asp-for="Login"/>
     <label class="form-label">Login</label>
+    <input type="text" class="form-control" asp-for="Login"/>
+    <span asp-validation-for="Login" class="text-danger"></span>
   </div>
 
   <!-- Password input -->
   <div class="form-outline mb-4">
-    <input type="password" class="form-control" asp-for="Password"/>
     <label class="form-label">Password</label>
+    <input type="password" class="form-control" asp-for="Password"/>
+    <span asp-validation-for="Password" class="text-danger"></span>
   </div>
 
   <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
   
-  @if(ViewBag.Error != null)
+  @if(ViewBag.ErrorMessage != null)
   {
-      <p>@ViewBag.Error</p>
+      <span class="text-danger">@ViewBag.ErrorMessage</span>
   }
 </form>

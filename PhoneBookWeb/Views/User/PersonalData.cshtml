@@ -3,7 +3,7 @@
     Layout = "Logged";
 
 }
-@model PersonalData
+@model User
 
 <section style="background-color: #eee;">
   <div class="container py-5">
@@ -23,9 +23,13 @@
           <div class="card-body text-center">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">John Smith</h5>
-            <p class="text-muted mb-1">Regular user</p>
-            <div class="d-flex justify-content-center mb-2">
+            <h5 class="my-3">@Model.PersonalData.Name @Model.PersonalData.Surname</h5>
+                        @{
+                            string premium = $"{ViewBag.Premium}";
+                            string standard = $"{ViewBag.Standard}";
+                        }
+                        <p class="text-muted mb-1">@if (Model.IsPremium == true) { @premium } @if (Model.IsPremium == false) { @standard }</p>
+                        <div class="d-flex justify-content-center mb-2">
               <button type="button" onclick="location.href='@Url.Action("UpgradeUser","User")'" class="btn btn-primary">Upgrade version</button>
               <button type="button" onclick="location.href='@Url.Action("PersonalDataEdition","User")'" class="btn btn-outline-primary ms-1">Edit personal info</button>
               <button type="button" onclick="location.href='@Url.Action("ChangePassword","User")'" class="btn btn-outline-primary ms-1">Change password</button>
@@ -41,7 +45,7 @@
                 <p class="mb-0">Login</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">(098) 765-4321</p>
+                <p class="text-muted mb-0">@Model.Login</p>
               </div>
             </div>
             <hr>
@@ -50,7 +54,7 @@
                 <p class="mb-0">Password</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">(098) 765-4321</p>
+                <p class="text-muted mb-0">@Model.Password</p>
               </div>
             </div>
             <hr>
@@ -59,7 +63,7 @@
                 <p class="mb-0">Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">Johnatan Smith</p>
+                <p class="text-muted mb-0">@Model.PersonalData.Name</p>
               </div>
             </div>
             <hr>
@@ -68,16 +72,16 @@
                 <p class="mb-0">Surname</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">example@example.com</p>
+                <p class="text-muted mb-0">@Model.PersonalData.Surname</p>
               </div>
             </div>
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Date of birth</p>
+                <p class="mb-0">Age</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">(097) 234-5678</p>
+                <p class="text-muted mb-0">@Model.PersonalData.Age</p>
               </div>
             </div>
             <hr>
@@ -86,7 +90,7 @@
                 <p class="mb-0">Email address</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">(098) 765-4321</p>
+                <p class="text-muted mb-0">@Model.PersonalData.EmailAddress</p>
               </div>
             </div>            
           </div>

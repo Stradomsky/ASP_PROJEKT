@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhoneBookApp.Data.Configuration;
 using PhoneBookApp.Data.Entities;
 using PhoneBookApp.Data.Repositories;
 using PhoneBookApp.Logic.Services.PhoneBooks;
+using PhoneBookApp.Logic.Services.TimeZoneApi;
 using PhoneBookApp.Logic.Services.Users;
 
 namespace PhoneBookWeb
@@ -19,6 +21,14 @@ namespace PhoneBookWeb
     // Controller - Klasa tworzona automatycznie na podstawie przychodz¹cego ¿¹dania, jej zadaniem jest wywo³aæ logikê programu i zwróciæ odpowiedni widok
     public class Program
     {
+        public IConfiguration Configuration { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            PhoneBookAppContext phoneBookAppContext = Configuration.Get<PhoneBookAppContext>();
+            phoneBookAppContext.Database.EnsureCreated();
+        }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -32,11 +42,14 @@ namespace PhoneBookWeb
 
             builder.Services.AddSingleton<IPhoneBookService, PhoneBookService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<ITimeZoneApiService, TimeZoneApiService>();
 
             builder.Services.AddTransient<IRepository<PhoneBook>, Repository<PhoneBook>>();
             builder.Services.AddTransient<IRepository<User>, Repository<User>>();
+            builder.Services.AddTransient<IRepository<Contact>, Repository<Contact>>();
 
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -56,7 +69,7 @@ namespace PhoneBookWeb
             // Widok od którego zacznie siê apka
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=SignIn}");
+                pattern: "{controller=Login}/{action=MainPage}");
 
             app.Run();
         }

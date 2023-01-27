@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "Logged";
+}
+@model PhoneBook
+
+<br />
+<div class="text-center">
+    <h1 class="display-4">Your contacts</h1>
+    <button type="button" onclick="location.href='@Url.Action("CreateContact", "PhoneBook", new { phoneBookId = @Model.Id })'" class="btn btn-outline-primary ms-1">Add new contact</button>
+    <br />
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Note</th>
+                <th scope="col">Phone number</th>
+                <th scope="col"></th>
+            </tr>
+            <tr></tr>
+        </thead>
+        <tbody>
+            @foreach (Contact contact in Model.Contacts)
+            {
+                <tr>
+                    <td>@contact.Id</td>
+                    <td>@contact.Name</td>
+                    <td>@contact.Description</td>
+                    <td>@contact.PhoneNumber</td>
+                    <th onclick="location.href='@Url.Action("DeleteContact","PhoneBook", new { phoneBookId = @Model.Id, contactId = contact.Id })'" >Delete</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

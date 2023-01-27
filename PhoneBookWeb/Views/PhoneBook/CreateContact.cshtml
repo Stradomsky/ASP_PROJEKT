@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Adding new contact";
+    Layout = "Logged";
+}
+@model NewContact
+
+<form method="post">
+    <br />
+
+  <div class="form-outline mb-4">
+    <label class="form-label">Id of phone book</label>
+    <input type="number" class="form-control" asp-for="PhoneBookId" readonly value="@ViewBag.PhoneBookId"/>
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label">Name</label>
+    <input type="text" class="form-control" asp-for="Name"/>
+    <span asp-validation-for="Name" class="text-danger"></span>
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label">Phone number</label>
+    <input type="text" class="form-control" asp-for="PhoneNumber"/>
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+  </div>
+
+  <div class="form-outline mb-4">
+    <label class="form-label">Description</label>
+    <input type="text" class="form-control" asp-for="Description"/>
+    <span asp-validation-for="Description" class="text-danger"></span>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mb-4">Create</button>
+  
+  @if(ViewBag.ErrorMessage != null)
+  {
+      <span class="text-danger">@ViewBag.ErrorMessage</span>
+  }
+</form>

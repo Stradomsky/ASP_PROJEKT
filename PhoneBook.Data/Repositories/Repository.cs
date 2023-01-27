@@ -13,8 +13,6 @@ namespace PhoneBookApp.Data.Repositories
         public Repository(PhoneBookAppContext phoneBookAppContext)
         {
             _phoneBookAppContext = phoneBookAppContext;
-
-            _phoneBookAppContext.Database.EnsureCreated();
         }
 
         public List<TEntity> GetAll()
@@ -25,13 +23,13 @@ namespace PhoneBookApp.Data.Repositories
 
         public void Add(TEntity entity)
         {
-            _phoneBookAppContext.Add(entity);
+            _phoneBookAppContext.Set<TEntity>().Add(entity);
             _phoneBookAppContext.SaveChanges();
         }
 
         public void Delete(TEntity entity)
         {
-            _phoneBookAppContext.Remove(entity);
+            _phoneBookAppContext.Set<TEntity>().Remove(entity);
             _phoneBookAppContext.SaveChanges();
         }
 
