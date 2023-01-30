@@ -3,7 +3,14 @@ Mateusz Stradomski 13831
 
 ## Wymagania
 
-Aby korzystać z aplikacji wymagany jest pakiet [ASP.NET Core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
+Aby korzystać z aplikacji wymagany jest pakiet [ASP.NET Core 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) oraz SQL Server Management Studio. 
+
+## Instalacja
+
+1. Wypakuj pliki projektu do wybranego katalogu.
+2. Otwórz terminal w katalogu PhoneBook.
+3. Zainstaluj narzędzie dotnet df za pomocą polecenia: ``dotnet tool install --global dotnet-ef``
+4. Uruchom aplikację używając: ``dotnet run``
 
 ## Opis projektu
 
