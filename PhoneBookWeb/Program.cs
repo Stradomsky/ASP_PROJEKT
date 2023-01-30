@@ -50,6 +50,9 @@ namespace PhoneBookWeb
 
             var app = builder.Build();
 
+            var phoneBookDbContext = app.Services.GetService<PhoneBookAppContext>();
+
+            phoneBookDbContext.Database.EnsureCreated();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
