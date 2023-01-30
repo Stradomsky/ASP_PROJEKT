@@ -6,7 +6,7 @@ namespace PhoneBookApp.Logic.Services.PhoneBooks
 {
     public interface IPhoneBookService
     {
-        List<PhoneBook> GetAllPhoneBooks();
+        List<PhoneBook> GetAllPhoneBooks(User user);
 
         PhoneBook GetPhoneBookById(int phoneBookId);
 

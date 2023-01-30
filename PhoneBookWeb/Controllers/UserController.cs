@@ -20,13 +20,20 @@ namespace PhoneBookApp.Web.Controllers
         [HttpGet]
         public IActionResult PersonalData()
         {
-            TimeZoneApiResult timeZoneApiResult = _timeZoneApiService.GetTimeZone("Europe", "Warsaw");
-
             if (_userService.SignedIn)
             {
                 ViewBag.Premium = "Premium user";
                 ViewBag.Standard = "Standard user";
-                return View(_userService.SignedInUser);
+
+                TimeZoneApiResult timeZoneApiResult = _timeZoneApiService.GetTimeZone("Europe", "Warsaw");
+
+                PersonalDataPack personalDataPack = new PersonalDataPack
+                {
+                    User = _userService.SignedInUser,
+                    TimeZoneApiResult = timeZoneApiResult
+                };
+
+                return View(personalDataPack);
             }
             else
             {

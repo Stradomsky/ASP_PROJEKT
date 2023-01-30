@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Create Phonebook";
     Layout = "Logged";
 }
 @model NewPhoneBook
@@ -15,8 +15,8 @@
 
   <button type="submit" class="btn btn-primary btn-block mb-4">Create</button>
   
-  @if(ViewBag.Error != null)
+  @if(ViewBag.ErrorMessage != null)
   {
-      <p>@ViewBag.Error</p>
+      <p>@ViewBag.ErrorMessage</p>
   }
 </form>

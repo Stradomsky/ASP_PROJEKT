@@ -32,7 +32,7 @@ namespace PhoneBookApp.Controllers
             {
                 // Tu wszelki testowy kod !
 
-                List<PhoneBook> phoneBooks = _phoneBookService.GetAllPhoneBooks();
+                List<PhoneBook> phoneBooks = _phoneBookService.GetAllPhoneBooks(_userService.SignedInUser);
 
                 // Metoda View() będzie szukała widoku w lokacji Views/PhoneBook/Index.cshtml
                 // A bierze się to ze "wzoru"                    Views/NazwaKontrolera/NazwaAkcji.cshtml
@@ -64,8 +64,16 @@ namespace PhoneBookApp.Controllers
         {
             if (_userService.SignedIn)
             {
-                _phoneBookService.CreatePhoneBook(_userService.SignedInUser, phoneBook);
-                return Redirect("../PhoneBook/ShowAllPhoneBooks ");
+                try
+                {
+                    _phoneBookService.CreatePhoneBook(_userService.SignedInUser, phoneBook);
+                    return Redirect("../PhoneBook/ShowAllPhoneBooks ");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.ErrorMessage = e.Message;
+                    return View();
+                }
             }
             else
             {

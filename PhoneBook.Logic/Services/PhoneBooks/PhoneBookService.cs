@@ -12,17 +12,22 @@ namespace PhoneBookApp.Logic.Services.PhoneBooks
         private readonly IRepository<PhoneBook> _phoneBookRepository;
         private readonly IRepository<Contact> _contactRepository;
 
+        private readonly int _phoneBookRegularMaxSize = 10;
+        private readonly int _phoneBookPremiumMaxSize = 100;
+
         public PhoneBookService(IRepository<PhoneBook> phoneBookRepository, IRepository<Contact> contactRepository)
         {
             _phoneBookRepository = phoneBookRepository;
             _contactRepository = contactRepository;
         }
 
-        public List<PhoneBook> GetAllPhoneBooks()
+        public List<PhoneBook> GetAllPhoneBooks(User user)
         {
             List<PhoneBook> phoneBooks = _phoneBookRepository.GetAll();
 
-            return phoneBooks;
+            List<PhoneBook> userPhoneBooks = phoneBooks.Where(pb => pb.UserId == user.Id).ToList();
+
+            return userPhoneBooks;
         }
 
         public PhoneBook GetPhoneBookById(int phoneBookId)
@@ -34,12 +39,19 @@ namespace PhoneBookApp.Logic.Services.PhoneBooks
             return phoneBook;
         }
 
+        // 1. Czy tworzy książkę
+        // 2. Czy dobrze podpina książkę 
         public void CreatePhoneBook(User user, PhoneBook phoneBook)
         {
-            // Walidacja danych (powtórzone nazwy itp)
+            List<PhoneBook> allPhoneBooks = _phoneBookRepository.GetAll();
 
-            // Podczepić phonebooka pod zalogowanego użytkownika
-            
+            if (allPhoneBooks.Any(c => c.Name == phoneBook.Name))
+            {
+                throw new Exception("There already is phone book with this name.");
+            }
+
+            phoneBook.MaxSize = user.IsPremium ? _phoneBookPremiumMaxSize : _phoneBookRegularMaxSize;
+
             user.PhoneBooks.Add(phoneBook);
 
             _phoneBookRepository.SaveChanges();
