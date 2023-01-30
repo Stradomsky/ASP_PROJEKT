@@ -10,6 +10,7 @@ namespace PhoneBookApp.Logic.Models
         public string Name { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Phone number needs to be filled.")]
+        [StringLength(13, MinimumLength = 9, ErrorMessage = "Phone number must be between 9 and 13 character in length.")]
         public string PhoneNumber { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Description needs to be filled.")]
